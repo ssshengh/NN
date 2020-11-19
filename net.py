@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-
+import torchvision.datasets as datasets
 
 # 简单CNN网络
 class Net(nn.Module):
