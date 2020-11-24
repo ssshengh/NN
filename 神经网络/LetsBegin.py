@@ -68,17 +68,25 @@ Label = np.array(Lab)
 Fb, = plt.plot(num, Fwd_pack, '-g')
 Fp, = plt.plot(num, Bwd_pack, '-b')
 L, = plt.plot(num, Label, 'o')
+plt.xlabel('packet ID')
+plt.ylabel('Byte|bite/s')
+
 
 plt.legend([Fb, Fp, L], ['Flow Bytes', 'Flow Packets', 'attack'])
+plt.savefig("FlowAbout.png", dpi=72)
 plt.show()
+
 
 # %%
 plt.figure(figsize=(10, 7), dpi=160)
 Fb1, = plt.plot(num, Flow_Byte, '-g')
 Fp1, = plt.plot(num, Flow_Packets, '-b')
 L, = plt.plot(num, Label, 'o')
+plt.xlabel('packet ID')
+plt.ylabel('Byte|bite/s')
 
-plt.legend([Fb1, Fp1, L], ['Flow Bytes', 'Flow Packets', 'attack'])
+plt.legend([Fb1, Fp1, L], ['Flow Bytes', 'Flow Packets', 'attack'], loc='upper left')
+plt.savefig("Fwd&Bwd.png", dpi=72)
 plt.show()
 # Flow Iat 过于稀疏，不作为考虑
 # %%
@@ -101,7 +109,7 @@ losses = []
 
 # %% NN
 input_size = features.shape[1]  # 查看数据类型可以看见是20w
-hidden_size = 100  # 隐藏层数量
+hidden_size = 50  # 隐藏层数量
 output_size = 1  # 1个输出层
 batch_size = 10000  # 批处理，每一批大小
 
@@ -118,7 +126,7 @@ optimizer = torch.optim.SGD(neu.parameters(), lr=0.01)  # 优化
 epoch = 1000
 for i in range(epoch):
     batch_loss = []
-
+    # 10000个一批
     for start in range(0, len(X), batch_size):
         end = start + batch_size if start + batch_size < len(X) else len(X)
         xx = torch.FloatTensor(X[start:end])
@@ -137,20 +145,23 @@ for i in range(epoch):
 plt.plot(np.arange(len(losses)) * 100, losses)
 plt.xlabel('Epoch')
 plt.ylabel('MSE')
+plt.savefig("Loss.png", dpi=72)
 plt.show()
 # %%
+# 处理测试集标签
 traget_test = test_tar.values.reshape([len(test_tar), 1])
 traget_test = traget_test.astype(float)
-
+# 将测试集扔进去进行预测
 x_test = torch.FloatTensor(test_features.values)
 y_test = torch.FloatTensor(traget_test)
 
-predict_test = neu(x_test)
+predict_test = neu(x_test) #预测结果
 predict_test = predict_test.data.numpy()
 
 # %%
 fig, ax = plt.subplots(figsize=(10, 7))
 ax.plot(predict_test, Label='Prediction')
-fig.plot(traget_test, Label='Data')
-plt.legend([fig, ax], ['Prediction', 'Data'], loc='upper left')
+ax.plot(traget_test, Label='Data')
+plt.legend(['Prediction', 'Data'], loc='upper left')
+plt.savefig("prediction&real.png", dpi=72)
 plt.show()
