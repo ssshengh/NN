@@ -17,8 +17,13 @@ if __name__ == '__main__':
     print(torch.add(y, z))
 
     x = torch.tensor([[8, 7, 4],
-                      [5, 6, 1]], dtype=torch.float)
+                      [5, 6, 1],
+                      [1, 9, 2]], dtype=torch.float)
     print(x.size()[:1])
+    print('test torch.max()', x.max(-1)[1])
+    t = x.max(-1)[1] == [1, 0, 0]
+    print(torch.mean(t.float()))
 
+    print('*********************************************')
     y = torch.randn(1, 1, 5, 5)
     print(y)
