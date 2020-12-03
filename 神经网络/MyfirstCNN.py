@@ -288,6 +288,8 @@ plt.plot(record)  # record记载了每一个打印周期记录的训练和校验
 plt.xlabel('Steps')
 plt.ylabel('Error rate')
 plt.show()
+#%%保存已经完成的网络
+torch.save(net, 'minst_conv_checkpoint')
 # %%
 # 在测试集上分批运行，并计算总的正确率
 net.eval()  # 标志模型当前为运行阶段

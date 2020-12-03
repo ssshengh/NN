@@ -25,7 +25,7 @@ read.loc[:, ' Flow Packets/s'] = read[' Flow Packets/s'] / a
 # df['Col'][np.isinf(df['Col'])] = -1
 # df['Col'][np.isinf(df['Col'])] = np.nan
 # df.replace(np.inf, -1) #替换正inf为-1
-# df.replace([np.inf, -np.inf], np.nan) #替换正负inf为NA
+# df.replace([np.inf, -np.inf], np.nan) #替换正负inf为NAN
 
 read = read.replace(np.inf, 0)
 read = read.replace(np.nan, 0)
