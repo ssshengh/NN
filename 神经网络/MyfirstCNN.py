@@ -337,7 +337,7 @@ for tup in weights:
             plt.imshow(layer1.numpy()[j, 0, ...])
             plt.savefig('{}weight.png'.format(j))
     i += 1
-
+plt.show()
 # %%
 # 调用net的retrieve_features方法可以抽取出喂入当前数据后吐出来的所有特征图（第一个卷积和第二个卷积层）
 
@@ -355,6 +355,8 @@ for i in range(4):
     plt.subplot(1, 4, i + 1)
     plt.axis('off')
     plt.imshow(feature_maps[0][0, i, ...].data.numpy())
+
+plt.savefig("forOneFig.png", dpi=160)
 plt.show()
 # 相当于进行了一个均值滤波：某些卷积核对图像进行了模糊化处理；或者强化边缘来提取，对应经典的gabor或sobel滤波
 

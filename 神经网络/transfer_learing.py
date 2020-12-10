@@ -81,6 +81,7 @@ def imshow(inp, title=None):
 
     # 将图像绘制出来
     plt.imshow(inp)
+    plt.imsave('sample.png', inp)
     if title is not None:
         plt.title(title)
     plt.pause(0.001)  # 暂停一会是为了能够将图像显示出来。
@@ -191,16 +192,17 @@ for epoch in range(num_epochs):
         epoch, np.mean(train_losses), 100. * train_r[0].numpy() / train_r[1], 100. * val_r[0].numpy() / val_r[1]))
     record.append([np.mean(train_losses), train_r[0].numpy() / train_r[1], val_r[0].numpy() / val_r[1]])
 
-#%%
+# %%
 # 打印误差率曲线
 x = [x[0] for x in record]
 y = [1 - x[1] for x in record]
 z = [1 - x[2] for x in record]
 plt.plot(x)
 plt.show()
-plt.figure(figsize = (10, 7))
+plt.figure(figsize=(10, 7))
 plt.plot(y)
 plt.plot(z)
 plt.xlabel('Epoch')
 plt.ylabel('Error Rate')
+plt.savefig('Loss.png', dpi=160)
 plt.show()
