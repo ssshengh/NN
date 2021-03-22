@@ -1,0 +1,53 @@
+import numpy as np
+import pandas as pd
+import torch
+from torch.autograd import Variable
+import torch.optim as optim
+import matplotlib.pyplot as plt
+#%%
+data_path = '/home/lulu/PycharmProjects/pythonProject/vehicle/write/COMBINE.csv'
+data = pd.read_csv(data_path)
+data.columns=['dertapx','dertapy','dertavx','dertavy','ifattacker']
+train_data = data[:20250]
+test_data = data[20250:]
+features, target = train_data.drop(['ifattacker'],axis=1), train_data['ifattacker']
+test_features, test_target = test_data.drop(['ifattacker'],axis=1), test_data['ifattacker']
+#%%
+X = features.values
+Y = target.values
+Y = Y.astype(int)
+Y = np.reshape(Y, [len(Y), 1])
+
+input_size = 4
+hidden_size = 10
+output_size = 1
+batch_size = 100
+neu = torch.nn.Sequential(
+    torch.nn.Linear(input_size, hidden_size),
+    torch.nn.Sigmoid(),
+    torch.nn.Linear(hidden_size, output_size),
+)
+cost = torch.nn.MSELoss()
+optimizer = torch.optim.SGD(neu.parameters(), lr=0.001)
+
+#shuju fenpchuli
+losses = []
+for i in range(1000):
+    batch_loss = []
+    for start in range(0, len(X), batch_size):
+        end = start+batch_size if start+batch_size < len(X) else len(X)
+        xx = Variable(torch.FloatTensor(X[start:end]))
+        yy = Variable(torch.FloatTensor(Y[start:end]))
+        predict = neu(xx)
+        loss = cost(predict, yy)
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+        batch_loss.append(loss.data.numpy())
+        if i % 1000 == 0:
+            losses.append(np.mean(batch_loss))
+            print(i, np.mean(batch_loss))
+plt.plot(np.arange(len(losses))*100, losses)
+plt.xlabel('epoch')
+plt.ylabel('MSE')
+plt.show()

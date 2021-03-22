@@ -25,6 +25,8 @@ plt.setp(lines[0], linewidth=1, markersize=10)
 plt.setp(lines[1], linewidth=1, markersize=10)
 plt.setp(lines[2], linewidth=1, markersize=10)
 plt.setp(lines[3], linewidth=1, markersize=10)
+
+# 把每个值添加到点上
 for i in range(len(nationwide)):
     plt.text(time[i], nationwide[i] + 0.5, '%s' % round(nationwide[i], 3), va='baseline', ha='right', fontsize=10)
     plt.text(time[i], First_industry[i] - 1, '%s' % round(First_industry[i], 3), va='center', ha='right', fontsize=10)
@@ -194,6 +196,8 @@ plt.ylim(-40, 20)
 plt.ylabel('Growth Rate (%)')
 plt.title('The Growth Rate of Specific Sectors (2020 Q1)')
 plt.xticks(rotation=10)  # 横坐标斜过来
+
+# 显示柱形图不同柱形的颜色
 for i in range(len(y_data)):
     if y_data[i] > 0:
         plt.bar(x_data[i], y_data[i], facecolor='#9999ff', edgecolor='white')
