@@ -12,8 +12,8 @@ if __name__ == '__main__':
     list_attack, id_a, list_common, id_c = fR.get_file_names(path_json)
     print("read files, yes!")
 
-    path_after = '/Users/shenheng/Code/NN/基础学习/object/data/'
-    path_write = '/Users/shenheng/Code/NN/data/'
+    path_after = '/基础学习/object/data/'
+    path_write = '/data/'
 
     print(id_c)
 
